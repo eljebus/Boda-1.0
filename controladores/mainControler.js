@@ -128,7 +128,7 @@ exports.album = async (req, res) => {
 };
 
 exports.textos = async (req, res) => {
-    const fechaObjetivo = new Date('2024-06-07T17:00:00');
+    const fechaObjetivo = new Date('2025-06-07T17:00:00');
     const ahora = new Date();
     if (ahora < fechaObjetivo) {
         return res.render('layout', {
@@ -466,7 +466,7 @@ exports.listarSuscriptores = listarSuscriptores;
 
 // Nueva ruta para verificar la fecha
 exports.verificarFecha = (req, res) => {
-    const fechaObjetivo = new Date('2024-06-07T16:30:00');
+    const fechaObjetivo = new Date('2025-06-07T16:30:00');
     const ahora = new Date();
     const mostrarContenido = ahora >= fechaObjetivo;
     res.json({ mostrarContenido });
