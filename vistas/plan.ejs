@@ -75,6 +75,22 @@
 
 
 
+        <script>
+        function abrirEnlace(url) {
+          // Detectar si estás en modo standalone (PWA instalada)
+          const esStandalone = window.matchMedia('(display-mode: standalone)').matches 
+                            || window.navigator.standalone === true;
+      
+          if (esStandalone) {
+            // Intenta forzar abrir en el navegador externo
+            window.location.href = url; // Abrirá dentro de la PWA pero mejor que nada
+          } else {
+            window.open(url, '_blank', 'noopener,noreferrer');
+          }
+        }
+      </script>
+
+
 
 
 </section>
