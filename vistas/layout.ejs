@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+ <html lang="es">
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <meta name="screen-orientation" content="portrait">
+     <link rel="icon" href="/img/luna.png">
+     <title>Fatima & Jesús</title>
+     
+     <!-- Manifiesto para PWA -->
+     <link rel="manifest" href="/manifest.json" crossorigin="use-credentials">
+     
+     <!-- Iconos para la aplicación -->
+     <link rel="icon" href="/img/icon-192x192.png" sizes="192x192">
+     <link rel="apple-touch-icon" href="/img/icon-192x192.png">
+     
+     <!-- Meta para PWA -->
+     <meta name="theme-color" content="#3967AF">
+     <meta name="description" content="Aplicación para la boda de Fátima y Jesús">
+     
+     <!-- Habilitar modo web app en iOS -->
+     <meta name="apple-mobile-web-app-capable" content="yes">
+     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+     <meta name="apple-mobile-web-app-title" content="Boda FyJ">
+     
+     <!-- CSS -->
+     <link href="/css/materialize.css" rel="stylesheet">
+     <link href="/css/style.css" rel="stylesheet">
+     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+     <script src="/js/materialize.js"></script>
+ </head>
+ <body>
+     <div class="landscape-message">
+         <center>
+             <h4>Por favor gira tu teléfono</h4><br>
+             <img src="/img/girar.png" alt="">
+         </center>
+     </div>
+     <button id="install-button"class="btn" style="display: none;">Instala y no te pierdas nada</button>
+
+     <main>
+         <%- include(content) %>
+     </main>
+     
+ 
+     <!-- Modal Structure -->
+     <div id="pushNotificationModal" class="modal">
+         <div class="modal-content" id="contentPush">
+             <h5>Activa las notificaciones push para no perderte ninguna actualización importante de nuestra boda.</h5>
+         </div>
+         <div class="modal-footer">
+             <a href="#!" id="enablePush" class="modal-close waves-effect waves-green btn-flat">Aceptar</a>
+             <a href="#!" id="cancelPush" class="modal-close waves-effect waves-red btn-flat">Cancelar</a>
+         </div>
+     </div>
+ 
+     <script>
+         // Variable global para el modal
+         let pushNotificationModal;
+ 
+         // Inicializar todos los modales
+         document.addEventListener('DOMContentLoaded', function() {
+             var modals = document.querySelectorAll('.modal');
+             M.Modal.init(modals, {
+                 dismissible: true,
+                 opacity: 0.5,
+                 inDuration: 300,
+                 outDuration: 200,
+                 startingTop: '4%',
+                 endingTop: '10%'
+             });
+ 
+             // Guardar referencia al modal de notificaciones
+             pushNotificationModal = M.Modal.getInstance(document.getElementById('pushNotificationModal'));
+ 
+             // Asignar eventos a los botones
+             const enablePushButton = document.getElementById('enablePush');
+             const cancelPushButton = document.getElementById('cancelPush');
+ 
+             if (enablePushButton) {
+                 enablePushButton.addEventListener('click', requestPushPermission);
+             }
+ 
+             if (cancelPushButton) {
+                 cancelPushButton.addEventListener('click', () => {
+                     // Guardar en localStorage que el usuario canceló
+                     localStorage.setItem('pushNotificationDeclined', 'true');
+                 });
+             }
+         });
+ 
+         // Registrar el Service Worker y manejar la PWA
+         if ('serviceWorker' in navigator) {
+             window.addEventListener('load', async () => {
+                 try {
+                     const registration = await navigator.serviceWorker.register('/service-worker.js', {
+                         scope: '/'
+                     });
+                     console.log('ServiceWorker registrado con éxito:', registration);
+                     window.swRegistration = registration;
+                     
+                     // Verificar si la PWA es instalable
+                     if (window.matchMedia('(display-mode: standalone)').matches) {
+                         console.log('La app ya está instalada');
+                     } else {
+                         // Verificar si el navegador soporta la instalación
+                         if ('getInstalledRelatedApps' in window.navigator) {
+                             window.navigator.getInstalledRelatedApps().then((relatedApps) => {
+                                 if (relatedApps.length === 0) {
+                                     console.log('La app es instalable');
+                                 }
+                             });
+                         }
+                     }
+
+                     // Verificar si ya está suscrito a notificaciones
+                     const subscription = await registration.pushManager.getSubscription();
+                     if (subscription) {
+                         console.log('Suscripción existente encontrada:', subscription);
+                         // Verificar si la suscripción existe en el servidor
+                         const exists = await checkSubscription(subscription);
+                         if (exists) {
+                             console.log('Usuario ya suscrito, no mostrar modal');
+                             return;
+                         }
+                     }
+
+                     // Mostrar el modal si NO está suscrito
+                     setTimeout(() => {
+                         if (pushNotificationModal) {
+                             pushNotificationModal.open();
+                         } else {
+                             console.error('Modal no inicializado');
+                         }
+                     }, 1000);
+
+                 } catch (error) {
+                     console.error('Error al registrar el ServiceWorker:', error);
+                     M.toast({html: 'Error al registrar el Service Worker. Intenta recargar la página.'});
+                 }
+             });
+         }
+ 
+         // Función para solicitar permiso de notificaciones
+         async function requestPushPermission() {
+             try {
+                 if (!window.swRegistration) {
+                     console.error('Service Worker no registrado');
+                     M.toast({html: 'Error: Service Worker no registrado'});
+                     return;
+                 }
+
+                 // Primero solicitar permiso para notificaciones
+                 const permission = await Notification.requestPermission();
+                 if (permission !== 'granted') {
+                     console.log('Permiso denegado');
+                     M.toast({html: 'Permiso denegado para notificaciones'});
+                     return;
+                 }
+
+                 console.log('Permiso concedido, procediendo a suscribir...');
+
+                 // Obtener la clave pública VAPID del servidor
+                 const publicKey = await getVapidPublicKey();
+                 if (!publicKey) {
+                     throw new Error('No se pudo obtener la clave pública VAPID');
+                 }
+                 console.log('Clave pública VAPID obtenida:', publicKey);
+
+                 // Crear nueva suscripción
+                 const subscription = await window.swRegistration.pushManager.subscribe({
+                     userVisibleOnly: true,
+                     applicationServerKey: urlBase64ToUint8Array(publicKey)
+                 });
+                 console.log('Nueva suscripción creada:', subscription);
+
+                 // Enviar suscripción al servidor
+                 await sendSubscriptionToBackend(subscription);
+                 console.log('Suscripción guardada en el servidor');
+
+                 // Cerrar modal después de suscribirse
+                 if (pushNotificationModal) {
+                     pushNotificationModal.close();
+                 }
+
+                 M.toast({html: '¡Notificaciones activadas con éxito!'});
+
+             } catch (error) {
+                 console.error('Error al solicitar permiso:', error);
+                 M.toast({html: 'Error al activar las notificaciones. Intenta nuevamente.'});
+                 
+                 // Si el error es específico de la suscripción, intentar eliminar la suscripción existente
+                 if (error.name === 'DOMException' && error.message.includes('push subscription')) {
+                     try {
+                         const subscription = await window.swRegistration.pushManager.getSubscription();
+                         if (subscription) {
+                             await subscription.unsubscribe();
+                             console.log('Suscripción anterior eliminada');
+                         }
+                     } catch (unsubscribeError) {
+                         console.error('Error al eliminar suscripción anterior:', unsubscribeError);
+                     }
+                 }
+             }
+         }
+ 
+         // Función para obtener la clave pública VAPID
+         async function getVapidPublicKey() {
+             try {
+                 const response = await fetch('/api/vapid-public-key');
+                 if (!response.ok) {
+                     throw new Error('Error al obtener la clave pública');
+                 }
+                 const data = await response.json();
+                 console.log('Clave pública VAPID obtenida:', data.publicKey);
+                 return data.publicKey;
+             } catch (error) {
+                 console.error('Error al obtener la clave pública VAPID:', error);
+                 throw error;
+             }
+         }
+ 
+         // Función para verificar si una suscripción existe en el servidor
+         async function checkSubscription(subscription) {
+             try {
+                 console.log('Verificando suscripción en el servidor:', subscription.endpoint);
+                 const response = await fetch('/check-subscription', {
+                     method: 'POST',
+                     headers: {
+                         'Content-Type': 'application/json'
+                     },
+                     body: JSON.stringify(subscription)
+                 });
+                 
+                 if (!response.ok) {
+                     console.error('Error en la respuesta del servidor:', response.status);
+                     return false;
+                 }
+                 
+                 const data = await response.json();
+                 console.log('Respuesta del servidor:', data);
+                 
+                 return data.exists === true;
+             } catch (error) {
+                 console.error('Error al verificar suscripción:', error);
+                 return false;
+             }
+         }
+ 
+         // Función para enviar la suscripción al servidor
+         async function sendSubscriptionToBackend(subscription) {
+             try {
+                 console.log('Enviando suscripción al servidor:', subscription);
+                 
+                 // Verificar que la suscripción tiene los campos necesarios
+                 if (!subscription || !subscription.endpoint) {
+                     throw new Error('Suscripción inválida');
+                 }
+
+                 const response = await fetch('/save-subscription', {
+                     method: 'POST',
+                     headers: {
+                         'Content-Type': 'application/json'
+                     },
+                     body: JSON.stringify(subscription)
+                 });
+
+                 console.log('Estado de la respuesta:', response.status);
+                 console.log('Headers de la respuesta:', Object.fromEntries(response.headers.entries()));
+
+                 let data;
+                 try {
+                     data = await response.json();
+                     console.log('Respuesta del servidor:', data);
+                 } catch (parseError) {
+                     console.error('Error al parsear la respuesta:', parseError);
+                     throw new Error('Error al procesar la respuesta del servidor');
+                 }
+
+                 if (!response.ok) {
+                     console.error('Error en la respuesta del servidor:', data);
+                     throw new Error(data.error || `Error del servidor: ${response.status}`);
+                 }
+
+                 if (data.message === 'Suscripción guardada correctamente' || data.message === 'Suscripción ya existe') {
+                     console.log('Suscripción procesada correctamente');
+                     return true;
+                 } else {
+                     console.error('Respuesta inesperada:', data);
+                     throw new Error('Respuesta inesperada del servidor');
+                 }
+             } catch (error) {
+                 console.error('Error al enviar suscripción al servidor:', error);
+                 throw error;
+             }
+         }
+ 
+         // Función auxiliar para convertir la clave pública
+         function urlBase64ToUint8Array(base64String) {
+             const padding = '='.repeat((4 - base64String.length % 4) % 4);
+             const base64 = (base64String + padding)
+                 .replace(/\-/g, '+')
+                 .replace(/_/g, '/');
+ 
+             const rawData = window.atob(base64);
+             const outputArray = new Uint8Array(rawData.length);
+ 
+             for (let i = 0; i < rawData.length; ++i) {
+                 outputArray[i] = rawData.charCodeAt(i);
+             }
+             return outputArray;
+         }
+     </script>
+     
+     <script src="/js/fecha.js"></script>
+     <script src="/js/instalar.js"></script>
+ </body>
+ </html>

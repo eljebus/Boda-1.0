@@ -1,0 +1,68 @@
+<section id="album">
+    
+    
+
+
+    <h1 class="z-depth-1 albumTitle">
+        Fatima & Jesús
+    </h1>
+
+    <% if (typeof mensaje !== 'undefined') { %>
+        <div class="mensaje-indisponible" style="padding: 1em;">
+          <CENTER>
+            <h5>Esta función estará disponible el día de nuestra boda</h5>
+            <i class="material-icons" style="color: rgb(0, 140, 255); font-size: 48px;">favorite</i>
+            <br>
+            <a href="/" class="waves-effect waves-light btn">Volver</a>
+        </CENTER>
+        </div>
+    <% } else { %>
+        <aside id="cargando">
+            CARGANDO FOTO...
+        </aside>
+
+        <div class="pinterest-masonry">
+            <% if (fotos && fotos.length > 0) { %>
+                <% fotos.forEach(foto => { %>
+                    <div class="masonry-item modal-trigger"  data-target="photo-modal">
+                        <img src="<%= foto %>" alt="Imagen del álbum"  crossOrigin="anonymous" >
+                    </div>
+                <% }); %>
+            <% } else { %>
+                <p class="no-fotos">No hay fotos disponibles.</p>
+            <% } %>
+        </div>
+    <% } %>
+
+    <a href="/" id="home-icon">
+        <i class="material-icons" style="font-size: 20px;">home</i>
+    </a>
+
+    <div class="fixed-action-btn" id="mainControl">
+        <a class="btn-floating btn-large red waves-effect waves-light btn z-depth-2">
+            <i class="large material-icons" id="menu">add_a_photo</i>
+        </a>
+        <ul>
+            <li><a class="btn-floating" id="camera-icon" style="background-color: #3E4095;"><img src="img/foto.png" alt=""></a></li>
+            <li><a class="btn-floating" style="background-color: #73A3D3;" id="galery-icon"><img src="img/galeria.png" alt=""></a></li>
+        </ul>
+    </div>
+    
+
+    <div id="photo-modal" class="modal">
+        <div class="modal-content" id="ImagenContenido">
+            <img id="modal-image" src="" alt="Imagen ampliada">
+            <i class="material-icons modal-close z-depth-1" id="closeImg" style="font-size: 24px;">close</i>
+            <div class="controles">
+                <i class="material-icons z-depth-2" id="descargar" style="font-size: 24px;">file_download</i>
+            </div>
+        </div>
+    </div>
+
+    
+    <script  src="js/script.js"></script>
+
+
+
+     
+</section>

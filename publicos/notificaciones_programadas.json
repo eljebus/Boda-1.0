@@ -1,0 +1,96 @@
+[
+    {
+      "id": "boda_principal",
+      "title": "¡Es hora de la boda!",
+      "body": "La ceremonia comenzará en 30 minutos. ¡Nos vemos en la iglesia!",
+      "image": "/img/icon-192x192.png",
+      "scheduledDateTime": "2025-06-07T16:30:00",
+      "suscripcion": {
+        "endpoint": "https://fcm.googleapis.com/fcm/send/xyz123...",
+        "expirationTime": null,
+        "keys": {
+          "p256dh": "abc123...",
+          "auth": "def456..."
+        }
+      }
+    },
+
+    {
+      "id": "boda_principal",
+      "title": "Album de fotos y lista de deseos ",
+      "body": "Han sido habilitados el album de fotos y la lista de deseos, para que puedas verlos y agregar tus deseos.",
+      "image": "/img/icon-192x192.png",
+      "scheduledDateTime": "2025-06-07T17:55:00",
+      "suscripcion": {
+        "endpoint": "https://fcm.googleapis.com/fcm/send/xyz123...",
+        "expirationTime": null,
+        "keys": {
+          "p256dh": "abc123...",
+          "auth": "def456..."
+        }
+      }
+    },
+
+    {
+      "id": "boda_principal",
+      "title": "Comparte tus deseos ",
+      "body": "Comparte tus deseos con nosotros, para que podamos cumplirlos.",
+      "image": "/img/icon-192x192.png",
+      "scheduledDateTime": "2025-06-07T19:55:00",
+      "suscripcion": {
+        "endpoint": "https://fcm.googleapis.com/fcm/send/xyz123...",
+        "expirationTime": null,
+        "keys": {
+          "p256dh": "abc123...",
+          "auth": "def456..."
+        }
+      }
+    },
+
+    {
+      "id": "boda_principal",
+      "title": "Comparte un recuerdo ",
+      "body": "Comparte un recuerdo con nosotros, para que podamos guardarlo.",
+      "image": "/img/icon-192x192.png",
+      "scheduledDateTime": "2025-06-07T20:55:00",
+      "suscripcion": {
+        "endpoint": "https://fcm.googleapis.com/fcm/send/xyz123...",
+        "expirationTime": null,
+        "keys": {
+          "p256dh": "abc123...",
+          "auth": "def456..."
+        }
+      }
+    },
+
+    {
+      "id": "recordatorio_mañana",
+      "title": "¡Mañana es el gran día!",
+      "body": "No olvides que mañana es nuestra boda. ¡Te esperamos!",
+      "image": "/img/icon-192x192.png",
+      "scheduledDateTime": "2025-06-06T21:00:00",
+      "suscripcion": {
+        "endpoint": "https://fcm.googleapis.com/fcm/send/abc456...",
+        "expirationTime": null,
+        "keys": {
+          "p256dh": "ghi789...",
+          "auth": "jkl012..."
+        }
+      }
+    },
+    {
+      "id": "recordatorio_semana",
+      "title": "¡GRACIAS!",
+      "body": "Gracias por acompañarnos en este día tan especial. ¡Nos vemos pronto!",
+      "image": "/img/icon-192x192.png",
+      "scheduledDateTime": "2025-06-08T01:00:00",
+      "suscripcion": {
+        "endpoint": "https://fcm.googleapis.com/fcm/send/xyz789...",
+        "expirationTime": null,
+        "keys": {
+          "p256dh": "mno345...",
+          "auth": "pqr678..."
+        }
+      }
+    }
+  ]

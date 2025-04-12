@@ -1,0 +1,11 @@
+[
+  {
+    "endpoint": "https://updates.push.services.mozilla.com/wpush/v2/gAAAAABn9vH16i5SJoF1fGYJTXvBx_ldbKSYGfafSg3SpslENhbBMM9Wi7a2HAI4KZ2RNFzaLpHtxR_nwU3upbdCEFx20TkAht0iBaE5vT5u4wa7O4Y0lOoCzvfiOEuEnsRAX2C-jkj00WhDnQoYhpKmOsc5N7K5X7CUZrlAFX5ZagtV2FKfJAE",
+    "expirationTime": null,
+    "keys": {
+      "auth": "gkgqGF0lzAdwR5wJufhB8w",
+      "p256dh": "BP2A31cEXJfZXAnaQtmItG-DP9_gsYgrwxYCvIA0tZnn8RF-vNOe-iaF7OwYqpai0HmYrlHCWLC876HFOGGNtSQ"
+    },
+    "fecha": "2025-04-12T00:40:14.183Z"
+  }
+]
