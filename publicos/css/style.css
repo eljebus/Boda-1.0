@@ -9,6 +9,21 @@
     src: url('fonts/Edensor-Free.otf') format('opentype');
 }
 
+@font-face {
+    font-family: 'CREMISS.signature';
+    src: url('fonts/CREMISS.signature.otf') format('opentype');
+}
+
+
+@font-face {
+    font-family: 'CREMISSS';
+    src: url('fonts/CREMISSS.otf') format('opentype');
+}
+
+@font-face {
+    font-family: 'Lathin-Sandy';
+    src: url('fonts/Lathin-Sandy.otf') format('opentype');
+}
 
 :root {
     --color-azul: #3967AF;
@@ -21,6 +36,20 @@ body {
     font-family: 'EdensorFree', sans-serif;
     background-color: #FCFEFE;
 
+}
+#activa{
+    display: none;
+}
+#activa p{text-align: center; margin: 0;}
+
+.activa-c{
+    font-family: 'CREMISSS';
+    font-size: 1.7EM;
+    margin: 0;
+}
+.activa-p{
+    font-family: 'Lathin-Sandy', sans-serif;
+    font-size: 1.9em;
 }
 #install-button{
     width: 100%;
