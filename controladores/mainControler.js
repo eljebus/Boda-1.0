@@ -96,10 +96,14 @@ exports.getDeseos = async (req, res) => {
     }
 };
 
+const moment = require('moment-timezone');  // Asegúrate de requerir moment-timezone
+
 exports.album = async (req, res) => {
-    const fechaObjetivo = new Date('2025-06-07T17:00:00');
-    const ahora = new Date();
-    if (ahora < fechaObjetivo) {
+    // Configurar la fecha objetivo con la zona horaria de Ciudad de México
+    const fechaObjetivo = moment.tz('2025-06-07T17:00:00', 'America/Mexico_City');
+    const ahora = moment().tz('America/Mexico_City'); // Obtener la hora actual en CDMX
+
+    if (ahora.isBefore(fechaObjetivo)) {
         return res.render('layout', {
             title: 'Álbum',
             content: 'album',
@@ -128,9 +132,11 @@ exports.album = async (req, res) => {
 };
 
 exports.textos = async (req, res) => {
-    const fechaObjetivo = new Date('2025-06-07T17:00:00');
-    const ahora = new Date();
-    if (ahora < fechaObjetivo) {
+    // Configurar la fecha objetivo con la zona horaria de Ciudad de México
+    const fechaObjetivo = moment.tz('2025-04-12T17:30:00', 'America/Mexico_City');
+    const ahora = moment().tz('America/Mexico_City'); // Obtener la hora actual en CDMX
+
+    if (ahora.isBefore(fechaObjetivo)) {
         return res.render('layout', {
             title: 'Textos',
             content: 'textos',
@@ -165,6 +171,7 @@ exports.textos = async (req, res) => {
         res.status(500).send('Error al cargar los textos');
     }
 };
+
 
 exports.saveText = async (req, res) => {
     console.log(req.body);
