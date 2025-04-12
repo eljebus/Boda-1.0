@@ -4,7 +4,7 @@
       "title": "¡Es hora de la boda!",
       "body": "La ceremonia comenzará en 30 minutos. ¡Nos vemos en la iglesia!",
       "image": "/img/icon-192x192.png",
-      "scheduledDateTime": "2025-06-07T16:30:00",
+      "scheduledDateTime": "2025-04-12T16:30:00",
       "suscripcion": {
         "endpoint": "https://fcm.googleapis.com/fcm/send/xyz123...",
         "expirationTime": null,
@@ -20,7 +20,7 @@
       "title": "Album de fotos y lista de deseos ",
       "body": "Han sido habilitados el album de fotos y la lista de deseos, para que puedas verlos y agregar tus deseos.",
       "image": "/img/icon-192x192.png",
-      "scheduledDateTime": "2025-06-07T17:55:00",
+      "scheduledDateTime": "2025-04-12T17:55:00",
       "suscripcion": {
         "endpoint": "https://fcm.googleapis.com/fcm/send/xyz123...",
         "expirationTime": null,
