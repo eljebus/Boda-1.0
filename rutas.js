@@ -72,7 +72,5 @@ router.get('/hora', (req, res) => {
 
 router.get('/api/vapid-public-key', controlador.getVapidPublicKey);
 
-// Nueva ruta para verificar la fecha
-router.get('/api/verificar-fecha', controlador.verificarFecha);
 
 module.exports = router;
