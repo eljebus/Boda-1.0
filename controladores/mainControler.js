@@ -463,11 +463,3 @@ exports.notificaciones = async (req, res) => {
 };
 
 exports.listarSuscriptores = listarSuscriptores;
-
-// Nueva ruta para verificar la fecha
-exports.verificarFecha = (req, res) => {
-    const fechaObjetivo = new Date('2025-06-07T16:30:00');
-    const ahora = new Date();
-    const mostrarContenido = ahora >= fechaObjetivo;
-    res.json({ mostrarContenido });
-};
