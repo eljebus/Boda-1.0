@@ -88,27 +88,29 @@ try {
   process.exit(1);
 }
 
-// 8. Programar notificaciones
 const notificacionesPath = path.join(__dirname, 'publicos', 'notificaciones_programadas.json');
 if (fs.existsSync(notificacionesPath)) {
   try {
     const notificaciones = JSON.parse(fs.readFileSync(notificacionesPath, 'utf-8'));
-    
-    notificaciones.forEach(notificacion => {
-      const fechaNotificacion = new Date(notificacion.scheduledDateTime);
-      
-      // Verificar que la fecha no está en el pasado
-      if (fechaNotificacion > new Date()) {
 
-           const ahora = new Date();
-        console.log( ahora.toISOString() );
-        console.log(`Programando notificación "${notificacion.title}" para:`, fechaNotificacion.toLocaleString());
-        
-        const job = schedule.scheduleJob(fechaNotificacion, async function() {
+    // Importar moment-timezone
+    const moment = require('moment-timezone');
+
+    // Obtener la hora actual en Ciudad de México
+    const horaMexicoActual = moment.tz("America/Mexico_City").toDate();
+
+    notificaciones.forEach(notificacion => {
+      // Convertir la fecha programada de la notificación a la hora de Ciudad de México
+      const fechaNotificacion = moment.tz(notificacion.scheduledDateTime, "America/Mexico_City").toDate();
+
+      // Verificar que la fecha no está en el pasado (comparado con la hora de México)
+      if (fechaNotificacion > horaMexicoActual) {
+        console.log(`Programando notificación "${notificacion.title}" para:`, fechaNotificacion.toLocaleString('es-MX', { timeZone: 'America/Mexico_City' }));
+
+        const job = schedule.scheduleJob(fechaNotificacion, async function () {
           try {
             console.log(`Enviando notificación programada: ${notificacion.title}`);
-            
-            // Leer suscripciones
+
             if (!fs.existsSync(suscripcionesPath)) {
               console.log('No hay suscripciones para enviar notificación');
               return;
@@ -119,8 +121,7 @@ if (fs.existsSync(notificacionesPath)) {
               console.log('No hay suscripciones para enviar notificación');
               return;
             }
-            
-            // Preparar el payload
+
             const payload = JSON.stringify({
               title: notificacion.title,
               body: notificacion.body,
@@ -137,12 +138,12 @@ if (fs.existsSync(notificacionesPath)) {
               }]
             });
 
-            // Enviar notificación a cada suscriptor
             for (const subscription of subscriptions) {
               try {
                 await webPush.sendNotification(subscription, payload);
                 console.log('Notificación enviada a:', subscription.endpoint);
               } catch (error) {
+                
                 console.error('Error al enviar notificación:', error);
               }
             }
@@ -154,6 +155,7 @@ if (fs.existsSync(notificacionesPath)) {
         console.log(`Notificación "${notificacion.title}" no programada: la fecha está en el pasado`);
       }
     });
+
   } catch (error) {
     console.error('Error al leer notificaciones programadas:', error);
   }
