@@ -4,7 +4,7 @@
       "title": "¡Es hora de la boda!",
       "body": "La ceremonia comenzará en 30 minutos. ¡Nos vemos en la iglesia!",
       "image": "/img/icon-192x192.png",
-      "scheduledDateTime": "2025-04-12T18:20:00",
+      "scheduledDateTime": "2025-04-12T18:24:00",
       "suscripcion": {
         "endpoint": "https://fcm.googleapis.com/fcm/send/xyz123...",
         "expirationTime": null,
