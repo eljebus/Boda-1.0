@@ -99,6 +99,9 @@ if (fs.existsSync(notificacionesPath)) {
       
       // Verificar que la fecha no está en el pasado
       if (fechaNotificacion > new Date()) {
+
+           const ahora = new Date();
+        console.log( ahora.toISOString() );
         console.log(`Programando notificación "${notificacion.title}" para:`, fechaNotificacion.toLocaleString());
         
         const job = schedule.scheduleJob(fechaNotificacion, async function() {
