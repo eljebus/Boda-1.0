@@ -4,7 +4,7 @@
       "title": "¡Es hora de la boda!",
       "body": "La ceremonia comenzará en 30 minutos. ¡Nos vemos en la iglesia!",
       "image": "/img/icon-192x192.png",
-      "scheduledDateTime": "2025-04-15T17:30:00",
+      "scheduledDateTime": "2025-04-16T16:30:00",
       "suscripcion": {
         "endpoint": "https://fcm.googleapis.com/fcm/send/xyz123...",
         "expirationTime": null,
@@ -20,7 +20,7 @@
       "title": "Album de fotos y lista de deseos ",
       "body": "Han sido habilitados el album de fotos y la lista de deseos, para que puedas verlos y agregar tus deseos.",
       "image": "/img/icon-192x192.png",
-      "scheduledDateTime": "2025-04-15T18:00:00",
+      "scheduledDateTime": "2025-04-16T18:00:00",
       "suscripcion": {
         "endpoint": "https://fcm.googleapis.com/fcm/send/xyz123...",
         "expirationTime": null,
@@ -36,7 +36,7 @@
       "title": "Comparte tus deseos ",
       "body": "Comparte tus deseos con nosotros, para que podamos cumplirlos.",
       "image": "/img/icon-192x192.png",
-      "scheduledDateTime": "2025-04-15T19:55:00",
+      "scheduledDateTime": "2025-04-16T19:55:00",
       "suscripcion": {
         "endpoint": "https://fcm.googleapis.com/fcm/send/xyz123...",
         "expirationTime": null,
@@ -52,7 +52,7 @@
       "title": "Comparte un recuerdo ",
       "body": "Comparte un recuerdo con nosotros, para que podamos guardarlo.",
       "image": "/img/icon-192x192.png",
-      "scheduledDateTime": "2025-04-15T20:55:00",
+      "scheduledDateTime": "2025-04-16T20:55:00",
       "suscripcion": {
         "endpoint": "https://fcm.googleapis.com/fcm/send/xyz123...",
         "expirationTime": null,
@@ -68,7 +68,7 @@
       "title": "¡Mañana es el gran día!",
       "body": "No olvides que mañana es nuestra boda. ¡Te esperamos!",
       "image": "/img/icon-192x192.png",
-      "scheduledDateTime": "2025-04-14T21:00:00",
+      "scheduledDateTime": "2025-04-15T21:00:00",
       "suscripcion": {
         "endpoint": "https://fcm.googleapis.com/fcm/send/abc456...",
         "expirationTime": null,
@@ -83,7 +83,7 @@
       "title": "¡GRACIAS!",
       "body": "Gracias por acompañarnos en este día tan especial. ¡Nos vemos pronto!",
       "image": "/img/icon-192x192.png",
-      "scheduledDateTime": "2025-04-15T20:00:00",
+      "scheduledDateTime": "2025-04-16T20:00:00",
       "suscripcion": {
         "endpoint": "https://fcm.googleapis.com/fcm/send/xyz789...",
         "expirationTime": null,
