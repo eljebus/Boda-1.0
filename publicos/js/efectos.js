@@ -1,13 +1,52 @@
 $(window).on('load', function () {
+
+
+    const music = document.getElementById('audioFondo');
+    const toggleBtn = document.getElementById('music-control');
+    let isPlaying = false;
+
+    // Set initial volume
+    if (music) {
+      music.volume = 0.3;
+    }
+
+    // Body click handler
+    $('body').one('click', function() {
+      if (music) {
+      music.play();
+      isPlaying = true;
+      toggleBtn.src = 'img/musica-on-4.gif';
+      }
+    });
+
+    // Toggle button handler
+    toggleBtn?.addEventListener('click', function() {
+      if (!music) return;
+      
+      if (!isPlaying) {
+      music.play();
+      toggleBtn.src = 'img/musica-on-4.gif';
+      toggleBtn.style.width = '25px';
+      } else {
+      music.pause();
+      toggleBtn.src = 'img/play.png'; // Assuming you have an off state image
+      toggleBtn.style.width = '20px';
+
+      }
+      isPlaying = !isPlaying;
+    });
+
+  
     // 1. Efecto visual
     if ($("#luna").length && $("#principal").length) {
       $("#luna").fadeOut(2000, function () {
         $("#principal").hide().fadeIn(1000);
       });
+      
     }
   
     // Usar moment-timezone para manejar la zona horaria
-    const targetDate = moment.tz('2025-04-16 17:00:00', 'America/Mexico_City').toDate().getTime(); // 7 de junio 5:00pm (hora de CDMX)
+    const targetDate = moment.tz('2025-06-07 17:00:00', 'America/Mexico_City').toDate().getTime(); // 7 de junio 5:00pm (hora de CDMX)
     let timer; // ✅ Declarado antes de usarse en clearInterval
   
     // 2. Función para actualizar la cuenta regresiva
