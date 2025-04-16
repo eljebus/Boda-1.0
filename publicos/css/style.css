@@ -37,6 +37,24 @@ body {
     background-color: #FCFEFE;
 
 }
+
+#music-control{
+    width: 20px;
+    height: 20px;
+}
+
+#music-button{
+
+    padding: 0.4em;
+    padding-top: 0.6em;
+    background-color: rgba(176, 176, 176, 0.75);
+    position:fixed;
+    right: 0;
+    top: 50%;
+    border-radius: 5px;
+    color: white;
+ 
+}
 #activa{
     display: none;
 }
