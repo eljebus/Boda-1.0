@@ -7,7 +7,7 @@ $(window).on('load', function () {
     }
   
     // Usar moment-timezone para manejar la zona horaria
-    const targetDate = moment.tz('2025-04-15 17:00:00', 'America/Mexico_City').toDate().getTime(); // 7 de junio 5:00pm (hora de CDMX)
+    const targetDate = moment.tz('2025-04-16 17:00:00', 'America/Mexico_City').toDate().getTime(); // 7 de junio 5:00pm (hora de CDMX)
     let timer; // ✅ Declarado antes de usarse en clearInterval
   
     // 2. Función para actualizar la cuenta regresiva
