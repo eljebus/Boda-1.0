@@ -11,7 +11,8 @@ const urlsToCache = [
     '/img/luna.png',
     '/img/icon-192x192.png',
     '/img/girar.png',
-    '/manifest.json'
+    '/manifest.json',
+    '/musica/boda.mp3'  // Añadimos la música al cache
 ];
 
 // Forzar activación inmediata del service worker
@@ -159,4 +160,3 @@ self.addEventListener('notificationclick', function(event) {
         );
     }
 });
-
