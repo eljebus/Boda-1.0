@@ -5,6 +5,7 @@ $(window).on('load', function () {
     const toggleBtn = document.getElementById('music-control');
     let isPlaying = false;
 
+
     // Set initial volume
     if (music) {
       music.volume = 0.3;
@@ -26,7 +27,7 @@ $(window).on('load', function () {
       if (!isPlaying) {
       music.play();
       toggleBtn.src = 'img/musica-on-4.gif';
-      toggleBtn.style.width = '25px';
+      toggleBtn.style.width = '35px';
       } else {
       music.pause();
       toggleBtn.src = 'img/play.png'; // Assuming you have an off state image
@@ -38,12 +39,41 @@ $(window).on('load', function () {
 
   
     // 1. Efecto visual
-    if ($("#luna").length && $("#principal").length) {
-      $("#luna").fadeOut(2000, function () {
-        $("#principal").hide().fadeIn(1000);
-      });
-      
+    if ($("#luna").length && $("#luna").length) {
+          const $luna = $('#luna');
+        const $slides = $('#slides img');
+        let current = 0;
+
+        function startAnimation() {
+
+            $luna.show().delay(4000).fadeOut(1500, function () {
+                // Luego empezar a mostrar los slides en secuencia
+                fadeSlides();
+            });
+        }
+
+        function fadeSlides() {
+            $slides.hide(); // Oculta todos
+            $slides.eq(current).fadeIn(1500).delay(3000).fadeOut(1500, function () {
+                current = (current + 1) % $slides.length;
+                if (current === 0) {
+                    // Al terminar todos los slides, volver a mostrar la luna y reiniciar
+                    $luna.fadeIn(1000, function () {
+                        startAnimation();
+                    });
+                } else {
+                    fadeSlides();
+                }
+            });
+        }
+
+        startAnimation(); // Iniciar el ciclo
+          
     }
+
+
+
+
   
     // Usar moment-timezone para manejar la zona horaria
     const targetDate = moment.tz('2025-06-07 17:00:00', 'America/Mexico_City').toDate().getTime(); // 7 de junio 5:00pm (hora de CDMX)
