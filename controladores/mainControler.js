@@ -100,7 +100,7 @@ const moment = require('moment-timezone');  // Asegúrate de requerir moment-tim
 
 exports.album = async (req, res) => {
     // Configurar la fecha objetivo con la zona horaria de Ciudad de México
-    const fechaObjetivo = moment.tz('2025-04-16T17:00:00', 'America/Mexico_City');
+    const fechaObjetivo = moment.tz('2025-05-02T17:00:00', 'America/Mexico_City');
     const ahora = moment().tz('America/Mexico_City'); // Obtener la hora actual en CDMX
 
     if (ahora.isBefore(fechaObjetivo)) {
@@ -133,7 +133,7 @@ exports.album = async (req, res) => {
 
 exports.textos = async (req, res) => {
     // Configurar la fecha objetivo con la zona horaria de Ciudad de México
-    const fechaObjetivo = moment.tz('2025-04-16T17:00:00', 'America/Mexico_City');
+    const fechaObjetivo = moment.tz('2025-05-02T17:00:00', 'America/Mexico_City');
     const ahora = moment().tz('America/Mexico_City'); // Obtener la hora actual en CDMX
 
     if (ahora.isBefore(fechaObjetivo)) {
