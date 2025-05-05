@@ -2,14 +2,24 @@ const CACHE_NAME = 'boda-app-dev';
 const VERSION = '1.0.0';
 
 // URLs a cachear inmediatamente
+// URLs a cachear inmediatamente
 const urlsToCache = [
     '/',
     '/index.html',
     '/js/materialize.js',
     '/js/fecha.js',
+    '/js/efectos.js',
     '/js/instalar.js',
+    '/css/materialize.css',
+    '/css/style.css',
     '/img/luna.png',
     '/img/icon-192x192.png',
+    'img/slides/foto1.jpg',
+    'img/slides/foto2.jpg',
+    'img/slides/foto3.jpg',
+    'img/slides/foto4.jpg', 
+    'img/slides/foto5.jpg',
+    '/img/icon-512x512.png',
     '/img/girar.png',
     '/manifest.json',
     '/musica/boda.mp3'  // Añadimos la música al cache
