@@ -73,17 +73,20 @@ try {
   const keyPath = path.join(__dirname, 'certificados', 'cert.key');
   const certPath = path.join(__dirname, 'certificados', 'cert.crt');
 
-  if (fs.existsSync(keyPath) && fs.existsSync(certPath)) {
-    const sslOptions = {
-      key: fs.readFileSync(keyPath),
-      cert: fs.readFileSync(certPath)
-    };
-    server = https.createServer(sslOptions, app);
-    console.log('Servidor HTTPS creado con certificados locales');
-  } else {
-    console.error('Certificados no encontrados. Por favor, genera los certificados con mkcert');
-    process.exit(1);
-  }
+if (process.env.RAILWAY_ENVIRONMENT) {
+  // Railway: No usar HTTPS local
+  server = app;
+} else if (fs.existsSync(keyPath) && fs.existsSync(certPath)) {
+  const sslOptions = {
+    key: fs.readFileSync(keyPath),
+    cert: fs.readFileSync(certPath)
+  };
+  server = https.createServer(sslOptions, app);
+  console.log('Servidor HTTPS creado con certificados locales');
+} else {
+  console.warn('Certificados no encontrados. Iniciando sin HTTPS');
+  server = app;
+}
 } catch (error) {
   console.error('Error al configurar SSL:', error);
   process.exit(1);
